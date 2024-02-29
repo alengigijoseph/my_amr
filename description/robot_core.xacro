@@ -1,51 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
-    <xacro:include filename="inertial_macros.xacro"/>
-
-
-    <xacro:property name="chassis_length" value="0.335"/>
-    <xacro:property name="chassis_width" value="0.265"/>
-    <xacro:property name="chassis_height" value="0.138"/>
-    <xacro:property name="chassis_mass" value="1.0"/>
-    <xacro:property name="wheel_radius" value="0.033"/>
-    <xacro:property name="wheel_thickness" value="0.026"/>
-    <xacro:property name="wheel_mass" value="0.05"/>
-    <xacro:property name="wheel_offset_x" value="0.226"/>
-    <xacro:property name="wheel_offset_y" value="0.1485"/>
-    <xacro:property name="wheel_offset_z" value="0.01"/>
-    <xacro:property name="caster_wheel_radius" value="0.01"/>
-    <xacro:property name="caster_wheel_mass" value="0.01"/>
-    <xacro:property name="caster_wheel_offset_x" value="0.075"/>
-    <xacro:property name="caster_wheel_offset_z" value="${wheel_offset_z - wheel_radius + caster_wheel_radius}"/>
-
-    <material name="white">
-        <color rgba="1 1 1 1" />
-    </material>
-
-    <material name="orange">
-        <color rgba="1 0.3 0.1 1"/>
-    </material>
-
-    <material name="blue">
-        <color rgba="0.2 0.2 1 1"/>
-    </material>
-
-    <material name="black">
-        <color rgba="0 0 0 1"/>
-    </material>
-
-    <material name="red">
-        <color rgba="1 0 0 1"/>
-    </material>
-
-    <!-- BASE LINK -->
-
-    <link name="base_link">
-
-    </link>
-
-    <!-- BASE_FOOTPRINT LINK -->
+    <xacro:include filename="$(find articubot_one)/description/materials.xacro" />
 
     <joint name="base_footprint_joint" type="fixed">
         <parent link="base_link"/>
@@ -56,132 +12,297 @@
     <link name="base_footprint">
     </link>
 
-
-    <!-- CHASSIS LINK -->
-
-    <joint name="chassis_joint" type="fixed">
-        <parent link="base_link"/>
-        <child link="chassis"/>
-        <origin xyz="${-wheel_offset_x} 0 ${-wheel_offset_z}"/>
-    </joint>
-
-    <link name="chassis">
-        <visual>
-            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}"/>
-            <geometry>
-                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
-            </geometry>
-            <material name="orange"/>
-        </visual>
-        <collision>
-            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}"/>
-            <geometry>
-                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
-            </geometry>
-        </collision>
-        <xacro:inertial_box mass="0.5" x="${chassis_length}" y="${chassis_width}" z="${chassis_height}">
-            <origin xyz="${chassis_length/2} 0 ${chassis_height/2}" rpy="0 0 0"/>
-        </xacro:inertial_box>
+    <link name="base_link">
+        
+    <inertial>
+        <origin rpy="0 0 0" xyz="0.008717050480319273 0.0013081620436010979 0.15115173825671988"/>
+        <mass value="15.428530536945836"/>
+        <inertia ixx="0.257115" ixy="0.001043" ixz="-0.003282" iyy="0.342385" iyz="-0.001055" izz="0.481029"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/base_link.stl" scale="0.001 0.001 0.001" />
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0 0 0"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
     </link>
 
-    <gazebo reference="chassis">
-        <material>Gazebo/Orange</material>
+    <gazebo reference="base_link">
+    <material>Gazebo/White</material>
     </gazebo>
-
-    <!-- LEFT WHEEL LINK -->
-
-    <joint name="left_wheel_joint" type="continuous">
-        <parent link="base_link"/>
-        <child link="left_wheel"/>
-        <origin xyz="0 ${wheel_offset_y} 0" rpy="-${pi/2} 0 0" />
-        <axis xyz="0 0 1"/>
-    </joint>
-
-    <link name="left_wheel">
-        <visual>
-            <geometry>
-                <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
-            </geometry>
-            <material name="blue"/>
-        </visual>
-        <collision>
-            <geometry>
-                <sphere radius="${wheel_radius}"/>
-            </geometry>
-        </collision>
-        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_cylinder>
-    </link>
-
-    <gazebo reference="left_wheel">
-        <material>Gazebo/Blue</material>
-    </gazebo>
-
-
-
-
-    <!-- RIGHT WHEEL LINK -->
-
-    <joint name="right_wheel_joint" type="continuous">
-        <parent link="base_link"/>
-        <child link="right_wheel"/>
-        <origin xyz="0 ${-wheel_offset_y} 0" rpy="${pi/2} 0 0" />
-        <axis xyz="0 0 -1"/>
-    </joint>
 
     <link name="right_wheel">
-        <visual>
-            <geometry>
-                <cylinder radius="${wheel_radius}" length="${wheel_thickness}"/>
-            </geometry>
-            <material name="blue"/>
-        </visual>
-        <collision>
-            <geometry>
-                <sphere radius="${wheel_radius}"/>
-            </geometry>
-        </collision>
-        <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_thickness}" radius="${wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_cylinder>
+    <inertial>
+        <origin rpy="0 0 0" xyz="-1.828063402709465e-05 0.05312247246161367 0.0002521115303902449"/>
+        <mass value="9.856921104469992"/>
+        <inertia ixx="0.020599" ixy="-7e-06" ixz="2e-06" iyy="0.03491" iyz="-2.8e-05" izz="0.020606"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="-0.0 0.227 -0.099839"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="-0.0 0.227 -0.099839"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/right_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
     </link>
 
     <gazebo reference="right_wheel">
-        <material>Gazebo/Blue</material>
+    <material>Gazebo/Black</material>
+    </gazebo>
+
+    <link name="left_wheel">
+    <inertial>
+        <origin rpy="0 0 0" xyz="-1.8254554994090065e-05 -0.0531169103077688 0.0002522130405125389"/>
+        <mass value="9.871217353742987"/>
+        <inertia ixx="0.020624" ixy="7e-06" ixz="2e-06" iyy="0.034948" iyz="2.8e-05" izz="0.020631"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="0.0 -0.227 -0.099839"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0.0 -0.227 -0.099839"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/left_wheel.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="left_wheel">
+    <material>Gazebo/Black</material>
+    </gazebo>
+
+    <link name="right_tyre">
+    <inertial>
+        <origin rpy="0 0 0" xyz="-5.919068486634321e-08 0.011578960710706687 0.00016105311301901903"/>
+        <mass value="4.766678644162142"/>
+        <inertia ixx="0.012277" ixy="-0.0" ixz="0.0" iyy="0.022304" iyz="-0.0" izz="0.012277"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="-0.0 0.2 -0.1"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/right_tyre.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="-0.0 0.2 -0.1"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/right_tyre.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="right_tyre">
+    <material>Gazebo/Black</material>
+    </gazebo>
+
+    <link name="left_tyre">
+    <inertial>
+        <origin rpy="0 0 0" xyz="9.30327782468428e-09 -0.011578963887744514 0.000161051324790773"/>
+        <mass value="4.766678875971219"/>
+        <inertia ixx="0.012277" ixy="0.0" ixz="-0.0" iyy="0.022304" iyz="0.0" izz="0.012277"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="0.0 -0.2 -0.1"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/left_tyre.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0.0 -0.2 -0.1"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/left_tyre.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="left_tyre">
+    <material>Gazebo/Black</material>
+    </gazebo>
+
+    <link name="front_caster">
+    <inertial>
+        <origin rpy="0 0 0" xyz="-0.025000797505036393 -2.9865544783409456e-16 -0.030208086053412367"/>
+        <mass value="0.4573656248802168"/>
+        <inertia ixx="0.000244" ixy="-0.0" ixz="0.0" iyy="0.000244" iyz="0.0" izz="0.000192"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="-0.172 -0.0 -0.07"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/front_caster.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="-0.172 -0.0 -0.07"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/front_caster.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="front_caster">
+    <material>Gazebo/Black</material>
+    <mu1 value="0.001"/>
+    <mu2 value="0.001"/>
+    </gazebo>
+
+    <link name="back_caster">
+    <inertial>
+        <origin rpy="0 0 0" xyz="0.024999202494963513 -3.2214520215812444e-16 -0.030208086053412374"/>
+        <mass value="0.4573656248802169"/>
+        <inertia ixx="0.000244" ixy="-0.0" ixz="0.0" iyy="0.000244" iyz="0.0" izz="0.000192"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="0.172 0.0 -0.07"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/back_caster.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0.172 0.0 -0.07"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/back_caster.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="back_caster">
+    <material>Gazebo/Black</material>
+    <mu1 value="0.001"/>
+    <mu2 value="0.001"/>
+    </gazebo>
+
+    <link name="lid">
+    <inertial>
+        <origin rpy="0 0 0" xyz="-0.20973058370001274 -0.0002000297507654507 0.021779111268977636"/>
+        <mass value="18.187373287828525"/>
+        <inertia ixx="0.290093" ixy="0.0" ixz="-0.003295" iyy="0.300261" iyz="0.0" izz="0.584949"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="-0.225 -0.0002 -0.25"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/lid.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="white"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="-0.225 -0.0002 -0.25"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/lid.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="lid">
+    <material>Gazebo/White</material>
+    </gazebo>
+
+    //
+
+    <link name="electronics_lid">
+    <inertial>
+        <origin rpy="0 0 0" xyz="-0.0511574994774171 -0.011997734212864706 -0.0015000000000000568"/>
+        <mass value="0.633989646973267"/>
+        <inertia ixx="0.003384" ixy="-9e-06" ixz="-0.0" iyy="0.000771" iyz="0.0" izz="0.004153"/>
+    </inertial>
+    <visual>
+        <origin rpy="0 0 0" xyz="0.035 -0.015 -0.28"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/electronics_lid.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <material name="blue"/>
+    </visual>
+    <collision>
+        <origin rpy="0 0 0" xyz="0.035 -0.015 -0.28"/>
+        <geometry>
+        <mesh filename="file:///$(find articubot_one)/meshes/electronics_lid.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+    </collision>
+    </link>
+
+    <gazebo reference="electronics_lid">
+    <material>Gazebo/White</material>
     </gazebo>
 
 
-    <!-- CASTER WHEEL LINK -->
+    <joint name="motor_right" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 -0.227 0.099839"/>
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    </joint>
 
-    <joint name="caster_wheel_joint" type="fixed">
-        <parent link="chassis"/>
-        <child link="caster_wheel"/>
-        <origin xyz="${caster_wheel_offset_x} 0 ${caster_wheel_offset_z}"/>
+    <gazebo reference="motor_right">
+    <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <joint name="motor_left" type="continuous">
+    <origin rpy="0 0 0" xyz="0.0 0.227 0.099839"/>
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <axis xyz="0.0 1.0 0.0"/>
+    </joint>
+
+    <gazebo reference="motor_left">
+    <material>Gazebo/Blue</material>
+    </gazebo>
+
+    <joint name="Rigid3" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 0.027 0.000161"/>
+    <parent link="right_wheel"/>
+    <child link="right_tyre"/>
+    </joint>
+
+    <joint name="Rigid4" type="fixed">
+    <origin rpy="0 0 0" xyz="0.0 -0.027 0.000161"/>
+    <parent link="left_wheel"/>
+    <child link="left_tyre"/>
+    </joint>
+
+    <joint name="Rigid5" type="fixed">
+    <origin rpy="0 0 0" xyz="0.172 0.0 0.07"/>
+    <parent link="base_link"/>
+    <child link="front_caster"/>
+    </joint>
+
+    <joint name="Rigid6" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.172 0.0 0.07"/>
+    <parent link="base_link"/>
+    <child link="back_caster"/>
+    </joint>
+
+    <joint name="Rigid7" type="fixed">
+    <origin rpy="0 0 0" xyz="0.225 0.0002 0.25"/>
+    <parent link="base_link"/>
+    <child link="lid"/>
     </joint>
 
 
-    <link name="caster_wheel">
-        <visual>
-            <geometry>
-                <sphere radius="${caster_wheel_radius}"/>
-            </geometry>
-            <material name="white"/>
-        </visual>
-        <collision>
-            <geometry>
-                <sphere radius="${caster_wheel_radius}"/>
-            </geometry>
-        </collision>
-        <xacro:inertial_sphere mass="${caster_wheel_mass}" radius="${caster_wheel_radius}">
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </xacro:inertial_sphere>
-    </link>
+    <joint name="Rigid9" type="fixed">
+    <origin rpy="0 0 0" xyz="-0.26 0.0148 0.03"/>
+    <parent link="lid"/>
+    <child link="electronics_lid"/>
+    </joint> 
 
-    <gazebo reference="caster_wheel">
-        <material>Gazebo/White</material>
-        <mu1 value="0.001"/>
-        <mu2 value="0.001"/>
-    </gazebo>
 
 </robot>

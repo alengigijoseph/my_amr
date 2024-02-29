@@ -8,12 +8,14 @@ from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 from nav2_common.launch import HasNodeParams
 
+#params passed as cla or use default one inside config
 
 def generate_launch_description():
+
     use_sim_time = LaunchConfiguration('use_sim_time')
     params_file = LaunchConfiguration('params_file')
-    default_params_file = os.path.join(get_package_share_directory("articubot_one"),
-                                       'config', 'mapper_params_online_async.yaml')
+
+    default_params_file = os.path.join(get_package_share_directory("articubot_one"), 'config','nav2','mapper_params_online_async.yaml')
 
     declare_use_sim_time_argument = DeclareLaunchArgument(
         'use_sim_time',
@@ -24,12 +26,8 @@ def generate_launch_description():
         default_value=default_params_file,
         description='Full path to the ROS2 parameters file to use for the slam_toolbox node')
 
-    # If the provided param file doesn't have slam_toolbox params, we must pass the
-    # default_params_file instead. This could happen due to automatic propagation of
-    # LaunchArguments. See:
-    # https://github.com/ros-planning/navigation2/pull/2243#issuecomment-800479866
-    has_node_params = HasNodeParams(source_file=params_file,
-                                    node_name='slam_toolbox')
+
+    has_node_params = HasNodeParams(source_file=params_file,node_name='slam_toolbox')
 
     actual_params_file = PythonExpression(['"', params_file, '" if ', has_node_params,
                                            ' else "', default_params_file, '"'])
