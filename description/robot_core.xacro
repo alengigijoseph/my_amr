@@ -1,0 +1,280 @@
+<?xml version="1.0" ?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find my_amr)/description/materials.xacro" />
+<!-- <xacro:include filename="$(find my_amr)/description/my_amr.gazebo" /> -->
+
+<xacro:property name="wheel_radius" value="0.09"/>
+<xacro:property name="wheel_thickness" value="0.04"/>
+<xacro:property name="wheel_mass" value="0.8"/>
+<xacro:property name="caster_wheel_radius" value="0.045"/>
+<xacro:property name="caster_wheel_mass" value="0.2"/>
+
+<joint name="base_footprint_joint" type="fixed">
+  <parent link="base_link"/>
+  <child link="base_footprint"/>
+  <origin xyz="0 0 0" rpy="0 0 0"/>
+</joint>
+
+<link name="base_footprint">
+</link>
+
+<link name="base_link">
+  <inertial>
+    <origin xyz="-1.608079915230958e-05 -2.1937365419521377e-08 0.13897786839067583" rpy="0 0 0"/>
+    <mass value="5.26629601620555"/>
+    <inertia ixx="0.212732" iyy="0.303577" izz="0.429345" ixy="0.0" iyz="-0.0" ixz="-2.1e-05"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="white"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="base_link">
+  <material>Gazebo/White</material>
+</gazebo>
+
+<link name="left_wheel_1">
+  <inertial>
+    <origin xyz="2.220446049250313e-18 0.020000000000000046 -1.3877787807814457e-17" rpy="0 0 0"/>
+    <mass value="0.9466246983796763"/>
+    <inertia ixx="0.002043" iyy="0.003834" izz="0.002043" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 -0.133205 -0.09" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <!-- <collision>
+    <origin xyz="-0.0 -0.133205 -0.09" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/left_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision> -->
+  <collision>
+    <geometry>
+        <sphere radius="${wheel_radius}"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="left_wheel_1">
+  <material>Gazebo/Black</material>
+  </gazebo>
+
+<link name="right_wheel_1">
+  <inertial>
+    <origin xyz="0.0 -0.020000000000000046 0.0" rpy="0 0 0"/>
+    <mass value="0.9466246983796763"/>
+    <inertia ixx="0.002043" iyy="0.003834" izz="0.002043" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.0 0.133205 -0.09" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="black"/>
+  </visual>
+  <!-- <collision>
+    <origin xyz="-0.0 0.133205 -0.09" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/right_wheel_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision> -->
+  <collision>
+    <geometry>
+        <sphere radius="${wheel_radius}"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="right_wheel_1">
+  <material>Gazebo/Black</material>
+</gazebo>
+
+<link name="caster2_1">
+  <inertial>
+    <origin xyz="-2.7755575615628914e-17 0.0 -0.024282671784564218" rpy="0 0 0"/>
+    <mass value="0.2"/>
+    <inertia ixx="0.00044" iyy="0.00044" izz="0.000435" ixy="-0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.12 -0.07 -0.057513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <!-- <collision>
+    <origin xyz="0.12 -0.07 -0.057513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster2_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision> -->
+  <collision>
+    <origin xyz="0 0 -0.012" rpy="0 0 0"/>
+    <geometry>
+        <sphere radius="${caster_wheel_radius}"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="caster2_1">
+  <material>Gazebo/Black</material>
+  <mu1 value="0.001"/>
+  <mu2 value="0.001"/>
+  </gazebo>
+
+<link name="caster1_1">
+  <inertial>
+    <origin xyz="-2.7755575615628914e-17 0.0 -0.024282671784564225" rpy="0 0 0"/>
+    <mass value="0.2"/>
+    <inertia ixx="0.00044" iyy="0.00044" izz="0.000435" ixy="0.0" iyz="-0.0" ixz="0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="0.12 0.065 -0.057513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <!-- <collision>
+    <origin xyz="0.12 0.065 -0.057513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster1_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision> -->
+  <collision>
+    <origin xyz="0 0 -0.012" rpy="0 0 0"/>
+    <geometry>
+        <sphere radius="${caster_wheel_radius}"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="caster1_1">
+  <material>Gazebo/Black</material>
+  <mu1 value="0.001"/>
+  <mu2 value="0.001"/>
+  </gazebo>
+
+<link name="caster3_1">
+  <inertial>
+    <origin xyz="0.0 0.0 -0.024282671784564225" rpy="0 0 0"/>
+    <mass value="0.2"/>
+    <inertia ixx="0.00044" iyy="0.00044" izz="0.000435" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.12 0.065 -0.057513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <!-- <collision>
+    <origin xyz="-0.12 0.065 -0.057513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster3_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision> -->
+  <collision>
+    <origin xyz="0 0 -0.012" rpy="0 0 0"/>
+    <geometry>
+        <sphere radius="${caster_wheel_radius}"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="caster3_1">
+  <material>Gazebo/Black</material>
+  <mu1 value="0.001"/>
+  <mu2 value="0.001"/>
+  </gazebo>
+
+<link name="caster4_1">
+  <inertial>
+    <origin xyz="0.0 0.0 -0.024282671784564218" rpy="0 0 0"/>
+    <mass value="0.2"/>
+    <inertia ixx="0.00044" iyy="0.00044" izz="0.000435" ixy="0.0" iyz="0.0" ixz="-0.0"/>
+  </inertial>
+  <visual>
+    <origin xyz="-0.12 -0.07 -0.059513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <!-- <collision>
+    <origin xyz="-0.12 -0.07 -0.059513" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="file://$(find my_amr)/meshes/caster4_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision> -->
+  <collision>
+    <origin xyz="0 0 -0.012" rpy="0 0 0"/>
+    <geometry>
+        <sphere radius="${caster_wheel_radius}"/>
+    </geometry>
+  </collision>
+</link>
+
+<gazebo reference="caster4_1">
+  <material>Gazebo/Black</material>
+  <mu1 value="0.001"/>
+  <mu2 value="0.001"/>
+  </gazebo>
+
+<joint name="left_wheel_joint" type="continuous">
+  <origin xyz="0.0 0.133205 0.09" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="left_wheel_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+<joint name="right_wheel_joint" type="continuous">
+  <origin xyz="0.0 -0.133205 0.09" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="right_wheel_1"/>
+  <axis xyz="0.0 1.0 0.0"/>
+</joint>
+
+
+<joint name="castor2_joint" type="fixed">
+  <origin xyz="-0.12 0.07 0.057513" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="caster2_1"/>
+</joint>
+
+<joint name="castor1_joint" type="fixed">
+  <origin xyz="-0.12 -0.065 0.057513" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="caster1_1"/>
+</joint>
+
+<joint name="castor3_joint" type="fixed">
+  <origin xyz="0.12 -0.065 0.057513" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="caster3_1"/>
+</joint>
+
+<joint name="castor4_joint" type="fixed">
+  <origin xyz="0.12 0.07 0.059513" rpy="0 0 0"/>
+  <parent link="base_link"/>
+  <child link="caster4_1"/>
+</joint>
+
+
+
+</robot>

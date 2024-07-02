@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <joint name="ultrasonic_right_joint" type="fixed">
+        <origin xyz="0.13299 -0.146689 0.075" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="ultrasonic_right_1"/>
+    </joint>
+      
+    <joint name="ultrasonic_front_joint" type="fixed">
+        <origin xyz="0.198 0.0 0.075" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="ultrasonic_front_1"/>
+    </joint>
+    
+    <joint name="ultrasonic_left_joint" type="fixed">
+        <origin xyz="0.13299 0.146689 0.075" rpy="0 0 0"/>
+        <parent link="base_link"/>
+        <child link="ultrasonic_left_1"/>
+    </joint>
+
+    <link name="ultrasonic_right_1">
+        <inertial>
+          <origin xyz="0.0006713306094823235 -0.000741148544342124 1.3877787807814457e-17" rpy="0 0 0"/>
+          <mass value="0.004932300466136072"/>
+          <inertia ixx="0.0" iyy="0.0" izz="0.0" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+        </inertial>
+        <visual>
+          <origin xyz="-0.13299 0.146689 -0.075" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find my_amr)/meshes/ultrasonic_right_1.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+          <material name="silver"/>
+        </visual>
+        <collision>
+          <origin xyz="-0.13299 0.146689 -0.075" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find my_amr)/meshes/ultrasonic_right_1.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </collision>
+      </link>
+      
+      <link name="ultrasonic_front_1">
+        <inertial>
+          <origin xyz="0.0010000000000000009 -3.5339496460705866e-17 0.0" rpy="0 0 0"/>
+          <mass value="0.004932300466135958"/>
+          <inertia ixx="0.0" iyy="0.0" izz="0.0" ixy="-0.0" iyz="-0.0" ixz="-0.0"/>
+        </inertial>
+        <visual>
+          <origin xyz="-0.198 0.0 -0.075" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find my_amr)/meshes/ultrasonic_front_1.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+          <material name="silver"/>
+        </visual>
+        <collision>
+          <origin xyz="-0.198 0.0 -0.075" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find my_amr)/meshes/ultrasonic_front_1.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </collision>
+      </link>
+      
+      <link name="ultrasonic_left_1">
+        <inertial>
+          <origin xyz="0.0006713306080746162 0.0007411485449778099 -2.7755575615628914e-17" rpy="0 0 0"/>
+          <mass value="0.004932300466136081"/>
+          <inertia ixx="0.0" iyy="0.0" izz="0.0" ixy="0.0" iyz="-0.0" ixz="-0.0"/>
+        </inertial>
+        <visual>
+          <origin xyz="-0.13299 -0.146689 -0.075" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find my_amr)/meshes/ultrasonic_left_1.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+          <material name="silver"/>
+        </visual>
+        <collision>
+          <origin xyz="-0.13299 -0.146689 -0.075" rpy="0 0 0"/>
+          <geometry>
+            <mesh filename="file://$(find my_amr)/meshes/ultrasonic_left_1.stl" scale="0.001 0.001 0.001"/>
+          </geometry>
+        </collision>
+      </link>
+
+      <gazebo reference="ultrasonic_right_1">
+        <material>Gazebo/Silver</material>
+      </gazebo>
+      
+      <gazebo reference="ultrasonic_front_1">
+        <material>Gazebo/Silver</material>
+      </gazebo>
+      
+      <gazebo reference="ultrasonic_left_1">
+        <material>Gazebo/Silver</material>
+      </gazebo>
+
+</robot>
